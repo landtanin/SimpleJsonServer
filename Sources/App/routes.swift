@@ -12,9 +12,32 @@ public func routes(_ router: Router) throws {
         return "Hello, world!"
     }
 
-    // Example of configuring a controller
-    let todoController = TodoController()
-    router.get("todos", use: todoController.index)
-    router.post("todos", use: todoController.create)
-    router.delete("todos", Todo.parameter, use: todoController.delete)
+    router.get("api", "data") { req -> Person in
+        return Person(
+            name: "Bruce Wayne",
+            job: "Owner of Wayne Enterprises",
+            skills: [
+                "Genius-level intellect",
+                "Expert detective",
+                "Master martial artist and hand-to-hand combatant",
+                "Master of disguise",
+                "Fluent in various languages"
+            ]
+        )
+    }
+
 }
+
+final class Person: Codable {
+    let name: String
+    let job: String
+    let skills: [String]
+    
+    init(name: String, job: String, skills: [String]) {
+        self.name = name
+        self.job = job
+        self.skills = skills
+    }
+}
+
+extension Person: Content {}
