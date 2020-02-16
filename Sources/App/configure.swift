@@ -6,6 +6,9 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     // Register providers first
     try services.register(FluentSQLiteProvider())
 
+    let serverConfiure = NIOServerConfig.default(hostname: "192.168.1.64", port: 8080)
+    services.register(serverConfiure)
+    
     // Register routes to the router
     let router = EngineRouter.default()
     try routes(router)
